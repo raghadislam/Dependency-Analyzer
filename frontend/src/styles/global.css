@@ -1,0 +1,98 @@
+:root {
+  --bp-navy: #090b14;
+  --bp-panel: #131726;
+  --bp-panel-raised: #1d2238;
+  --bp-grid-line: rgba(74, 222, 128, 0.15); /* Soft aurora grid */
+  --bp-trace-cyan: #4ade80; /* bright aurora green */
+  --bp-trace-cyan-dim: #15803d; /* deep aurora green */
+  --bp-signal-amber: #c084fc; /* purple auroral fringe */
+  --bp-danger: #f43f5e;
+  --bp-success: #34d399;
+  --bp-chalk: #f8fafc;
+  --bp-chalk-dim: #94a3b8;
+
+  --font-display: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --shadow-panel: 0 1px 0 rgba(0, 0, 0, 0.25), 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  font-size: 18px;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bp-navy);
+  /* Aurora style background gradient */
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(74, 222, 128, 0.15), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(192, 132, 252, 0.18), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(21, 128, 61, 0.2), transparent 50%);
+  background-attachment: fixed;
+  color: var(--bp-chalk);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+code,
+.mono {
+  font-family: var(--font-display);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--bp-trace-cyan);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--bp-trace-cyan-dim);
+  color: var(--bp-chalk);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bp-grid-line);
+  border-radius: 8px;
+}
