@@ -1,0 +1,23 @@
+# Dependencies
+**/node_modules/
+
+# Build output
+**/dist/
+backend/dist/
+frontend/dist/
+
+# Environment files
+**/.env
+
+# Editor/OS
+.DS_Store
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+*.log
+
+# The target repo being analyzed
+/BuyBuddy/
+*.tsbuildinfo
