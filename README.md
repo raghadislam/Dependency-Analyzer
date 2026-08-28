@@ -102,17 +102,12 @@ dependency-analyzer/
 
 The seed script is a standalone tool, not part of the running API — it's meant to be re-run whenever the target repo changes, pointed at any TypeScript project via `--repo <path>`, not hardcoded to BuyBuddy.
 
-## UI & Design
-
-The UI is inspired by something I personally love: the Aurora Borealis / Northern Lights.
-![The Best Palette From Nature](./assets/the-best-palette-from-nature.png)
-
 ## Setup & run
 
 ### 1. Create your CognoDB instance
-1. Sign up at [console.cognodb.com/signup](https://console.cognodb.com/signup) (no credit card needed for the free tier).
-2. Create a free **c0** instance, pick a region, wait ~1 minute for provisioning.
-3. Copy the connection URI (`bolt+s://<instance-id>.databases.cognodb.cloud`) and the generated password for user `cognodb` — **the password is shown once**.
+1. Sign up at [console.cognodb.com/signup](https://console.cognodb.com/signup)
+2. Create an instance.
+3. Copy the connection URI and the generated password for user `cognodb`.
 
 ### 2. Backend
 ```bash
@@ -121,14 +116,13 @@ npm install
 cp .env.example .env
 # edit .env: COGNODB_URI, COGNODB_USER=cognodb, COGNODB_PASSWORD
 npm run start:dev
-# API listening on http://localhost:3000
 ```
 
 ### 3. Seed the graph
 The seed script parses a target TypeScript repo and loads it into CognoDB. This repo doesn't vendor a copy of the target codebase — clone it as a sibling folder:
 ```bash
 # from the repo root
-git clone https://github.com/raghadislam/BuyBuddy ../BuyBuddy
+git clone https://github.com/raghadislam/BuyBuddy ./BuyBuddy
 cd backend
 npm run seed -- --repo ../BuyBuddy --reset
 ```
@@ -139,9 +133,8 @@ This prints a summary (files/packages/edges found, any unresolved imports) befor
 cd frontend
 npm install
 cp .env.example .env
-# edit .env: VITE_API_BASE_URL=http://localhost:3000 (or your deployed backend URL)
+# edit .env
 npm run dev
-# App at http://localhost:5173
 ```
 
 ## The queries, explained
@@ -186,7 +179,6 @@ ORDER BY edgeCount DESC
 
 
 The UI is simple and inspired by something I personally love: the Aurora Borealis / Northern Lights.
-![The Best Palette From Nature](https://cdn.mos.cms.futurecdn.net/UDbienNe5Qy7Mqz8GwoiJn-1280-80.jpg)
 
 - **Blast Radius tab** — search for a file, toggle between "what breaks if I change this" and "what this relies on", and see the result as concentric rings (each ring = one more step away) with the real import edges drawn between them. Click any node to re-center on it.
 - **Insights tab** — riskiest files to touch (highest fan-in), any import cycles found, a cross-module coupling table, and a package-impact search.
