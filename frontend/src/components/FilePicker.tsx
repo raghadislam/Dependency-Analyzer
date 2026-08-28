@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function FilePicker({ files, value, onSelect, loading }: Props) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -17,14 +17,16 @@ export function FilePicker({ files, value, onSelect, loading }: Props) {
     function handleClickOutside(e: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setOpen(false);
+        setQuery(null);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const filtered = query
-    ? files.filter((f) => f.path.toLowerCase().includes(query.toLowerCase())).slice(0, 12)
+  const searchTerm = query !== null ? query : '';
+  const filtered = searchTerm
+    ? files.filter((f) => f.path.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 12)
     : files.slice(0, 12);
 
   return (
@@ -37,9 +39,13 @@ export function FilePicker({ files, value, onSelect, loading }: Props) {
         className="file-picker__input"
         type="text"
         placeholder={loading ? 'Loading files…' : 'Search for a file, e.g. auth.service.ts'}
-        value={query || value}
+        value={query !== null ? query : value}
         disabled={loading}
-        onFocus={() => setOpen(true)}
+        onFocus={() => {
+          setOpen(true);
+          // Only initialize query to value if it's currently null
+          if (query === null) setQuery(value);
+        }}
         onChange={(e) => {
           setQuery(e.target.value);
           setOpen(true);
@@ -53,7 +59,7 @@ export function FilePicker({ files, value, onSelect, loading }: Props) {
                 className="file-picker__option"
                 onClick={() => {
                   onSelect(f.path);
-                  setQuery('');
+                  setQuery(null);
                   setOpen(false);
                 }}
               >
